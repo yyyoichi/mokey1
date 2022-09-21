@@ -1,6 +1,7 @@
 package lexer
 
 import (
+	"fmt"
 	"testing"
 	"monkey/token"
 )
@@ -14,8 +15,8 @@ func TestNextToken(t *testing.T) {
 	}{
 		{token.ASSIGN, "="},
 		{token.PLUS, "+"},
-		{token.LBRACE, ")"},
-		{token.RPAREN, "("},
+		{token.LPAREN, "("},
+		{token.RPAREN, ")"},
 		{token.LBRACE, "{"},
 		{token.RBRACE, "}"},
 		{token.COMMA, ","},
@@ -25,6 +26,11 @@ func TestNextToken(t *testing.T) {
 	l := New(input)
 	for i, tt:= range tests {
 		tok := l.NextToken()
+		// fmt.Printf("[%d]...%q, %q", i, tok.Type, tok.Literal)
+		// fmt.Println()
+		// fmt.Printf("[%d]...%q, %q", i, tt.expectedType, tt.expectedLiteral)
+		// fmt.Println()
+		// fmt.Println()
 		if tok.Type != tt.expectedType {
 			t.Fatalf("tests[%d] - literal wrong. expected=%q, got=%q",
 				i, tt.expectedType, tok.Type)
