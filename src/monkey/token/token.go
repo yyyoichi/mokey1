@@ -12,7 +12,7 @@ const (
 	EOF = "EOF"
 	
 	//識別子・リテラル
-	INDENT = "INDENT"
+	IDENT = "INDENT"
 	INT = "INT"
 
 	//演算子
