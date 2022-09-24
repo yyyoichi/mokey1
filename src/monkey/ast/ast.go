@@ -1,11 +1,13 @@
 package ast
 
 import (
+	"bytes"
 	"monkey/token"
 )
 
 type Node interface {
 	TokenLiteral() string
+	String() string
 }
 
 type Statement interface {
@@ -30,6 +32,15 @@ func (p *Program) TokenLiteral() string {
 	}
 }
 
+func (p *Program) String() string {
+	var out bytes.Buffer
+
+	for _, s := range p.Statements {
+		out.WriteString(s.String())
+	}
+	return out.String()
+}
+
 type LetStatement struct {
 	Token token.Token // token.LET
 	Name *Identifier
@@ -38,6 +49,8 @@ type LetStatement struct {
 
 func (ls *LetStatement) statementNode() {}
 func (ls *LetStatement) TokenLiteral() string { return ls.Token.Literal }
+func (ls *LetStatement) String() string { return ""}
+
 
 type Identifier struct {
 	Token token.Token // token.IDENT
@@ -54,6 +67,7 @@ type ReturnStatement struct {
 
 func (rs *ReturnStatement) statementNode() {}
 func (rs *ReturnStatement) TokenLiteral() string { return rs.Token.Literal }
+func (rs *ReturnStatement) String() string { return ""}
 
 type ExpressionStatement struct {
 	Token token.Token //式の最初のトークン
@@ -62,5 +76,5 @@ type ExpressionStatement struct {
 
 func (es *ExpressionStatement) statementNode() {}
 func (es *ExpressionStatement) TokenLiteral() string { return es.Token.Literal } 
-
+func (es *ExpressionStatement) String() string { return ""}
 
