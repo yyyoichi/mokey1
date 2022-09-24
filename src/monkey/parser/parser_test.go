@@ -11,7 +11,7 @@ func TestLetStatements(t *testing.T) {
 	input := `
 	let x = 5;
 	let y = 10;
-	let 838383;`
+	let foobar = 838383;`
 
 	l := lexer.New(input)
 	p := New(l)
@@ -68,8 +68,8 @@ func testLetStatements(t *testing.T, s ast.Statement, name string) bool {
 func TestReturnStatements(t *testing.T) {
 	input := `
 		return 9;
-		reutrn 10;
-		reutrn 9888;
+		return 10;
+		return 9888;
 	`
 	l :=lexer.New(input)
 	p := New(l)
