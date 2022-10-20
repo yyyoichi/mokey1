@@ -192,7 +192,7 @@ func (ie *IfExpression) String() string {
 type FunctionLiteral struct {
 	Token token.Token //fn
 	Parameters []*Identifier
-	body *BlockStatement
+	Body *BlockStatement
 }
 
 func (fl *FunctionLiteral) expressionNode() {}
@@ -209,7 +209,7 @@ func (fl *FunctionLiteral) String() string {
 	out.WriteString("(")
 	out.WriteString(strings.Join(params, ", "))
 	out.WriteString(")")
-	out.WriteString(fl.body.String())
+	out.WriteString(fl.Body.String())
 
 	return out.String()
 }
