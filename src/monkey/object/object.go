@@ -50,10 +50,10 @@ func (rv *ReturnValue) Inspect() string {
 }
 
 type Error struct {
-	Meesage string
+	Message string
 }
 
 func (e *Error) Type() ObjectType { return ERROR_OBJ }
 func (e *Error) Inspect() string {
-	return "ERROR: " + e.Meesage
+	return "ERROR: " + e.Message
 }
