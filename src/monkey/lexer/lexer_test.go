@@ -23,10 +23,12 @@ func TestNextToken(t *testing.T) {
 		return false;
 	}
 	10 == 10;
-	10 != 9;`
+	10 != 9;
+"foobar"
+"foo bar"`
 
 	tests := []struct {
-		expectedType token.TokenType
+		expectedType    token.TokenType
 		expectedLiteral string
 	}{
 		{token.LET, "let"},
@@ -67,7 +69,7 @@ func TestNextToken(t *testing.T) {
 		{token.IDENT, "ten"},
 		{token.RPAREN, ")"},
 		{token.SEMICOLON, ";"},
-		
+
 		{token.BANG, "!"},
 		{token.MINUS, "-"},
 		{token.SLASH, "/"},
@@ -108,6 +110,8 @@ func TestNextToken(t *testing.T) {
 		{token.NOT_EQ, "!="},
 		{token.INT, "9"},
 		{token.SEMICOLON, ";"},
+		{token.STRING, "foobar"},
+		{token.STRING, "foo bar"},
 
 		{token.EOF, ""},
 		// if (5 < 10) {
@@ -126,7 +130,7 @@ func TestNextToken(t *testing.T) {
 		// {token.EOF, ""},
 	}
 	l := New(input)
-	for i, tt:= range tests {
+	for i, tt := range tests {
 		tok := l.NextToken()
 		fmt.Printf("[%d]...%q, %q", i, tok.Type, tok.Literal)
 		fmt.Println()

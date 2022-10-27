@@ -3,10 +3,10 @@ package lexer
 import "monkey/token"
 
 type Lexer struct {
-	input string
-	position int //入力における現在の位置（現在の文字を指し示す）
-	readPosition int //これから読み込む位置（現在の文字の次）
-	ch byte //現在解析中の文字
+	input        string
+	position     int  //入力における現在の位置（現在の文字を指し示す）
+	readPosition int  //これから読み込む位置（現在の文字の次）
+	ch           byte //現在解析中の文字
 }
 
 func New(input string) *Lexer {
@@ -14,7 +14,7 @@ func New(input string) *Lexer {
 	l.readChar()
 	return l
 }
-func(l *Lexer) readChar() {
+func (l *Lexer) readChar() {
 	if l.readPosition >= len(l.input) {
 		l.ch = 0
 	} else {
@@ -23,7 +23,7 @@ func(l *Lexer) readChar() {
 	l.position = l.readPosition
 	l.readPosition += 1
 }
-func(l *Lexer) NextToken() token.Token {
+func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
 
 	l.skipWhitespace()
@@ -71,6 +71,9 @@ func(l *Lexer) NextToken() token.Token {
 		tok = newToken(token.LPAREN, l.ch)
 	case ')':
 		tok = newToken(token.RPAREN, l.ch)
+	case '"':
+		tok.Type = token.STRING
+		tok.Literal = l.readString()
 	case 0:
 		tok.Literal = ""
 		tok.Type = token.EOF
@@ -101,7 +104,7 @@ func (l *Lexer) readIdentifier() string {
 	for isLetter(l.ch) {
 		l.readChar()
 	}
-	return l.input[position: l.position]
+	return l.input[position:l.position]
 }
 
 func (l *Lexer) readNumber() string {
@@ -109,7 +112,18 @@ func (l *Lexer) readNumber() string {
 	for isDigit(l.ch) {
 		l.readChar()
 	}
-	return l.input[position: l.position]
+	return l.input[position:l.position]
+}
+
+func (l *Lexer) readString() string {
+	position := l.position + 1
+	for {
+		l.readChar()
+		if l.ch == '"' || l.ch == 0 {
+			break
+		}
+	}
+	return l.input[position:l.position]
 }
 
 // ホワイトスペーススキップ
